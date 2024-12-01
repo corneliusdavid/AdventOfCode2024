@@ -18,7 +18,7 @@ end;
 
 procedure ShowAbout;
 begin
-  var AboutText := TFile.ReadAllLines(TPath.Combine(ParentPath, 'about.txt'));
+  var AboutText := TFile.ReadAllLines(TPath.Combine(ParentPath, ChangeFileExt(ExtractFileName(ParamStr(0)), '.txt')));
   for var i := 0 to Length(AboutText) - 1 do
     Writeln(AboutText[i]);
 end;
