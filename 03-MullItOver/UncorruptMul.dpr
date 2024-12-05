@@ -30,7 +30,7 @@ begin
   Result := ' ';
 
   Writeln;
-  Writeln('Advent of Code 2024 - Day 03: Mull it Over');
+  Writeln('Advent of Code 2024 - Day 03: Mull it Over / Corrupted Data');
   Writeln;
   Writeln(' ? - Information About this Puzzle');
   Writeln(' A - Generate the Answer for this Puzzle');
