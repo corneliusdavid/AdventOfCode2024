@@ -5,7 +5,7 @@ program ResonantCollinearity;
 {$R *.res}
 
 uses
-  System.SysUtils, System.Classes, System.IOUtils, System.Math, System.StrUtils, RegularExpressions;
+  System.SysUtils, System.Classes, System.IOUtils, System.Math, System.StrUtils;
 
 var
   Done: Boolean;
