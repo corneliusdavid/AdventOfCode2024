@@ -5,7 +5,7 @@ program PrintQueue;
 {$R *.res}
 
 uses
-  System.SysUtils, System.Classes, System.IOUtils, System.Math, System.StrUtils, RegularExpressions;
+  System.SysUtils, System.Classes, System.IOUtils, System.Math, System.StrUtils, System.Generics.Collections;
 
 var
   Done: Boolean;
@@ -51,16 +51,30 @@ begin
 end;
 
 procedure GenerateAnswer;
+var
+  PageOrderRules: TList<
+  PageQueues: TArray<Integer>;
 begin
-  // read input
-  var InputFile := TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt'));
-  // process each line
-  for var i := 0 to Length(InputFile) - 1 do begin
-    var CurrLine := InputFile[i];
+  PageOrderRules := TDictionary<Integer, Integer>.Create;
 
+  try
+    // read input
+    var InputFile := TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt'));
+    // process each line
+    for var i := 0 to Length(InputFile) - 1 do begin
+      var CurrLine := Trim(InputFile[i]);
+
+      if Pos('|', CurrLine) > -1 then
+        // read rules
+        PageOrderRules.Add(StrToInt(LeftStr(CurrLine, 2)), StrToInt(RightStr(CurrLine, 2)))
+      else
+        // read page updates
+    end;
+
+    Writeln(Format('No answer generated yet--but there are %d rules and %d page updates to analyize.', [PageOrderRules.Count, Length(PageQueues)]));
+  finally
+    PageOrderRules.Free;
   end;
-
-  Writeln(Format('No answer generated yet--but there are %d lines in the input file', [Length(InputFile)]));
 end;
 
 procedure MenuAction(const Cmd: Char);
