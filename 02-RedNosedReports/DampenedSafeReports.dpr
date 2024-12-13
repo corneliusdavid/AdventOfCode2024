@@ -1,4 +1,10 @@
 program DampenedSafeReports;
+(* as: DampenedSafeReports.exe
+ * in: Delphi 12.2
+ * on: December, 2024
+ * by: David Cornelius
+ * to: Solve Day 2b of Advent of Code, 2024 (https://adventofcode.com/2024/day/2)
+ *)
 
 {$APPTYPE CONSOLE}
 
@@ -7,50 +13,7 @@ program DampenedSafeReports;
 uses
   System.SysUtils, System.Classes, System.IOUtils, System.Math, System.StrUtils, System.Generics.Collections;
 
-var
-  Done: Boolean;
-
-function ParentPath: string;
-begin
-  // executables are created in a .\$(Platform)\$(Config) folder, so look two parents up for files
-  Result := '..' + TPath.DirectorySeparatorChar + '..';
-end;
-
-procedure ShowAbout;
-begin
-  var AboutText := TFile.ReadAllLines(TPath.Combine(ParentPath, ChangeFileExt(ExtractFileName(ParamStr(0)), '.txt')));
-  for var i := 0 to Length(AboutText) - 1 do
-    Writeln(AboutText[i]);
-end;
-
-function MenuPrompt: Char;
-var
-  Cmd: string;
-begin
-  Result := ' ';
-
-  Writeln;
-  Writeln('Advent of Code 2024 - Day 02: Red-Nosed Reports');
-  Writeln;
-  Writeln(' ? - Information About this Puzzle');
-  Writeln(' A - Generate the Answer for this Puzzle');
-  Writeln(' X - Exit this program');
-  Writeln;
-  Write  ('> ');
-
-  Readln(cmd);
-  cmd := UpperCase(Trim(cmd));
-  if cmd.IsEmpty then
-    Writeln('Please enter a command.')
-  else if cmd.Length > 1 then
-    Writeln('Please only enter one character.')
-  else if not CharInSet(cmd[1], ['?','A','X']) then
-    Writeln('Please enter one of the valid characters.')
-  else
-    Result := cmd[1];
-end;
-
-procedure GenerateAnswer;
+procedure GenerateAnswer(const InputLines: TArray<string>);
 const
   IncreaseDecreaseStr: array[Boolean] of string = ('Decreasing', 'Increasing');
 type
@@ -72,11 +35,9 @@ begin
   try
     ReportNums := TList<Integer>.Create;
     try
-      // read all reports
-      var InputFile := TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt'));
       // analyze reports, one line at a time
-      for var i := 0 to Length(InputFile) - 1 do begin
-        ReportLine.CommaText := InputFile[i];
+      for var i := 0 to Length(InputLines) - 1 do begin
+        ReportLine.CommaText := InputLines[i];
         SetLength(ReportArray, ReportLine.Count);
 
         // store report numbers for this line in a list
@@ -148,7 +109,8 @@ begin
           Writeln('Bad Report: ', ReportLine.CommaText);
       end;
 
-      Writeln(Format('Safe Reports: %d out of %d total reports.', [SafeReportCount, Length(InputFile)]));
+      Writeln(Format('Safe Reports: %d out of %d total reports.', [SafeReportCount, Length(InputLines)]));
+      Writeln('========= Number too low!!!  no star :-(');
     finally
       ReportNums.Free;
     end;
@@ -157,23 +119,14 @@ begin
   end;
 end;
 
-procedure MenuAction(const Cmd: Char);
+function ParentPath: string;
 begin
-  case Cmd of
-    '?': ShowAbout;
-    'A': GenerateAnswer;
-    'X': Done := True;
-  end;
+  // executables are created in a .\$(Platform)\$(Config) folder, so look two parents up for files
+  Result := '..' + TPath.DirectorySeparatorChar + '..';
 end;
 
 begin
-  try
-    Done := False;
-    repeat
-      MenuAction(MenuPrompt);
-    until Done;
-  except
-    on E: Exception do
-      Writeln(E.ClassName, ': ', E.Message);
-  end;
+  Writeln('Day 2b of Advent of Code, 2024 (https://adventofcode.com/2024/day/2)');
+  GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
+  Readln;
 end.

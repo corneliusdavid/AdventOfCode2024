@@ -1,4 +1,10 @@
 program UncorruptMul;
+(* as: UncorruptMul.exe, a Windows console app
+ * in: Delphi 12.2
+ * on: December, 2024
+ * by: David Cornelius
+ * to: Solve Day 3a of Advent of Code, 2024 (https://adventofcode.com/2024/day/3)
+ *)
 
 {$APPTYPE CONSOLE}
 
@@ -7,50 +13,7 @@ program UncorruptMul;
 uses
   System.SysUtils, System.Classes, System.IOUtils, RegularExpressions;
 
-var
-  Done: Boolean;
-
-function ParentPath: string;
-begin
-  // executables are created in a .\$(Platform)\$(Config) folder, so look two parents up for files
-  Result := '..' + TPath.DirectorySeparatorChar + '..';
-end;
-
-procedure ShowAbout;
-begin
-  var AboutText := TFile.ReadAllLines(TPath.Combine(ParentPath, ChangeFileExt(ExtractFileName(ParamStr(0)), '.txt')));
-  for var i := 0 to Length(AboutText) - 1 do
-    Writeln(AboutText[i]);
-end;
-
-function MenuPrompt: Char;
-var
-  Cmd: string;
-begin
-  Result := ' ';
-
-  Writeln;
-  Writeln('Advent of Code 2024 - Day 03: Mull it Over / Corrupted Data');
-  Writeln;
-  Writeln(' ? - Information About this Puzzle');
-  Writeln(' A - Generate the Answer for this Puzzle');
-  Writeln(' X - Exit this program');
-  Writeln;
-  Write  ('> ');
-
-  Readln(cmd);
-  cmd := UpperCase(Trim(cmd));
-  if cmd.IsEmpty then
-    Writeln('Please enter a command.')
-  else if cmd.Length > 1 then
-    Writeln('Please only enter one character.')
-  else if not CharInSet(cmd[1], ['?','A','X']) then
-    Writeln('Please enter one of the valid characters.')
-  else
-    Result := cmd[1];
-end;
-
-procedure GenerateAnswer;
+procedure GenerateAnswer(const InputLines: TArray<string>);
 const
   MulPattern = 'mul\([0-9]+\,[0-9]+\)';
 var
@@ -65,10 +28,8 @@ begin
 
   RegEx := TRegEx.Create(MulPattern);
 
-  // read input
-  var InputFile := TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt'));
-  for var i := 0 to Length(InputFile) - 1 do begin
-    var CurrLine := InputFile[i];
+  for var i := 0 to Length(InputLines) - 1 do begin
+    var CurrLine := InputLines[i];
 
     var p := RegEx.Match(CurrLine);
     while p.Success do begin
@@ -90,23 +51,14 @@ begin
   Writeln(Format('Found Mul Matches: %d for a grand total of %d', [MulCount, MulTotal]));
 end;
 
-procedure MenuAction(const Cmd: Char);
+function ParentPath: string;
 begin
-  case Cmd of
-    '?': ShowAbout;
-    'A': GenerateAnswer;
-    'X': Done := True;
-  end;
+  // executables are created in a .\$(Platform)\$(Config) folder, so look two parents up for files
+  Result := '..' + TPath.DirectorySeparatorChar + '..';
 end;
 
 begin
-  try
-    Done := False;
-    repeat
-      MenuAction(MenuPrompt);
-    until Done;
-  except
-    on E: Exception do
-      Writeln(E.ClassName, ': ', E.Message);
-  end;
+  Writeln('Day 3a of Advent of Code, 2024 (https://adventofcode.com/2024/day/3)');
+  GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
+  Readln;
 end.

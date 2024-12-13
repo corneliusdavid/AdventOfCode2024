@@ -1,4 +1,10 @@
 program PrintQueue;
+(* as: PrintQueue.exe, a Windows console app
+ * in: Delphi 12.2
+ * on: December, 2024
+ * by: David Cornelius
+ * to: Solve Day 5a of Advent of Code, 2024 (https://adventofcode.com/2024/day/5)
+ *)
 
 {$APPTYPE CONSOLE}
 
@@ -7,62 +13,17 @@ program PrintQueue;
 uses
   System.SysUtils, System.Classes, System.IOUtils, System.Math, System.StrUtils, System.Generics.Collections;
 
+procedure GenerateAnswer(const InputLines: TArray<string>);
 var
-  Done: Boolean;
-
-function ParentPath: string;
-begin
-  // executables are created in a .\$(Platform)\$(Config) folder, so look two parents up for files
-  Result := '..' + TPath.DirectorySeparatorChar + '..';
-end;
-
-procedure ShowAbout;
-begin
-  var AboutText := TFile.ReadAllLines(TPath.Combine(ParentPath, ChangeFileExt(ExtractFileName(ParamStr(0)), '.txt')));
-  for var i := 0 to Length(AboutText) - 1 do
-    Writeln(AboutText[i]);
-end;
-
-function MenuPrompt: Char;
-var
-  Cmd: string;
-begin
-  Result := ' ';
-
-  Writeln;
-  Writeln('Advent of Code 2024 - Day 05: Print Queue');
-  Writeln;
-  Writeln(' ? - Information About this Puzzle');
-  Writeln(' A - Generate the Answer for this Puzzle');
-  Writeln(' X - Exit this program');
-  Writeln;
-  Write  ('> ');
-
-  Readln(cmd);
-  cmd := UpperCase(Trim(cmd));
-  if cmd.IsEmpty then
-    Writeln('Please enter a command.')
-  else if cmd.Length > 1 then
-    Writeln('Please only enter one character.')
-  else if not CharInSet(cmd[1], ['?','A','X']) then
-    Writeln('Please enter one of the valid characters.')
-  else
-    Result := cmd[1];
-end;
-
-procedure GenerateAnswer;
-var
-  PageOrderRules: TList<
+  PageOrderRules: TDictionary<Integer, Integer>;
   PageQueues: TArray<Integer>;
 begin
   PageOrderRules := TDictionary<Integer, Integer>.Create;
 
   try
-    // read input
-    var InputFile := TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt'));
     // process each line
-    for var i := 0 to Length(InputFile) - 1 do begin
-      var CurrLine := Trim(InputFile[i]);
+    for var i := 0 to Length(InputLines) - 1 do begin
+      var CurrLine := Trim(InputLines[i]);
 
       if Pos('|', CurrLine) > -1 then
         // read rules
@@ -77,23 +38,14 @@ begin
   end;
 end;
 
-procedure MenuAction(const Cmd: Char);
+function ParentPath: string;
 begin
-  case Cmd of
-    '?': ShowAbout;
-    'A': GenerateAnswer;
-    'X': Done := True;
-  end;
+  // executables are created in a .\$(Platform)\$(Config) folder, so look two parents up for files
+  Result := '..' + TPath.DirectorySeparatorChar + '..';
 end;
 
 begin
-  try
-    Done := False;
-    repeat
-      MenuAction(MenuPrompt);
-    until Done;
-  except
-    on E: Exception do
-      Writeln(E.ClassName, ': ', E.Message);
-  end;
+  Writeln('Day 5a of Advent of Code, 2024 (https://adventofcode.com/2024/day/5)');
+  GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
+  Readln;
 end.

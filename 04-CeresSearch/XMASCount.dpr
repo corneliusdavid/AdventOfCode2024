@@ -1,4 +1,10 @@
 program XMASCount;
+(* as: XMASCount.exe, a Windows console app
+ * in: Delphi 12.2
+ * on: December, 2024
+ * by: David Cornelius
+ * to: Solve Day 4a of Advent of Code, 2024 (https://adventofcode.com/2024/day/4)
+ *)
 
 {$APPTYPE CONSOLE}
 
@@ -7,50 +13,7 @@ program XMASCount;
 uses
   System.SysUtils, System.Classes, System.IOUtils, System.Math, System.StrUtils, RegularExpressions;
 
-var
-  Done: Boolean;
-
-function ParentPath: string;
-begin
-  // executables are created in a .\$(Platform)\$(Config) folder, so look two parents up for files
-  Result := '..' + TPath.DirectorySeparatorChar + '..';
-end;
-
-procedure ShowAbout;
-begin
-  var AboutText := TFile.ReadAllLines(TPath.Combine(ParentPath, ChangeFileExt(ExtractFileName(ParamStr(0)), '.txt')));
-  for var i := 0 to Length(AboutText) - 1 do
-    Writeln(AboutText[i]);
-end;
-
-function MenuPrompt: Char;
-var
-  Cmd: string;
-begin
-  Result := ' ';
-
-  Writeln;
-  Writeln('Advent of Code 2024 - Day 04: Ceres Search - "XMAS" Count');
-  Writeln;
-  Writeln(' ? - Information About this Puzzle');
-  Writeln(' A - Generate the Answer for this Puzzle');
-  Writeln(' X - Exit this program');
-  Writeln;
-  Write  ('> ');
-
-  Readln(cmd);
-  cmd := UpperCase(Trim(cmd));
-  if cmd.IsEmpty then
-    Writeln('Please enter a command.')
-  else if cmd.Length > 1 then
-    Writeln('Please only enter one character.')
-  else if not CharInSet(cmd[1], ['?','A','X']) then
-    Writeln('Please enter one of the valid characters.')
-  else
-    Result := cmd[1];
-end;
-
-procedure GenerateAnswer;
+procedure GenerateAnswer(const InputLines: TArray<string>);
 var
   HorzXMASCount: Integer;
   VertXMASCount: Integer;
@@ -68,20 +31,17 @@ begin
 
   RegEx := TRegEx.Create('(XMAS)|(SAMX)');
 
-  // read input
-  var InputFile := TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt'));
-
-  Writeln(Format('The Input file has %d rows, each of which is %d characters long.', [Length(Inputfile), Length(InputFile[0])]));
+  Writeln(Format('The Input file has %d rows, each of which is %d characters long.', [Length(InputLines), Length(InputLines[0])]));
 
   // set the number of vertical lines
-  SetLength(VertLines, Length(InputFile[0]));
+  SetLength(VertLines, Length(InputLines[0]));
   // initialize the vertical lines
-  for var c := 0 to Length(InputFile[0]) - 1 do
+  for var c := 0 to Length(InputLines[0]) - 1 do
     VertLines[c] := EmptyStr;
 
   // set the length of the diagonal lines to accomodate the one for each row and one for each column
-  SetLength(RtDiagLines, Length(InputFile) - 4 + Length(InputFile[0]) - 3);
-  SetLength(LfDiagLines, Length(InputFile) - 4 + Length(InputFile[0]) - 3);
+  SetLength(RtDiagLines, Length(InputLines) - 4 + Length(InputLines[0]) - 3);
+  SetLength(LfDiagLines, Length(InputLines) - 4 + Length(InputLines[0]) - 3);
   // initialize the diagonal lines
   for var i := 0 to Length(RtDiagLines) - 1 do begin
     RtDiagLines[i] := EmptyStr;
@@ -89,33 +49,33 @@ begin
   end;
 
   // build downward-right diagonal lines
-  for var row := 0 to Length(InputFile) - 4 do
-    for var col := 1 to Length(InputFile[0]) - row do
-      RtDiagLines[row] := RtDiagLines[row] + InputFile[row+(col-1)][col];
+  for var row := 0 to Length(InputLines) - 4 do
+    for var col := 1 to Length(InputLines[0]) - row do
+      RtDiagLines[row] := RtDiagLines[row] + InputLines[row+(col-1)][col];
   // the downward-right diagonal lines to the right of the top-left corner
-  for var col := 2 to Length(InputFile[0]) - 3 do
-    for var row := 0 to Length(InputFile) - col do
-      RtDiagLines[Length(InputFile) - 5 + col] :=
-        RtDiagLines[Length(InputFile) - 5 + col] + InputFile[row][col+row];
+  for var col := 2 to Length(InputLines[0]) - 3 do
+    for var row := 0 to Length(InputLines) - col do
+      RtDiagLines[Length(InputLines) - 5 + col] :=
+        RtDiagLines[Length(InputLines) - 5 + col] + InputLines[row][col+row];
 
   // build downard-left diagonal lines
-  for var row := 0 to Length(InputFile) - 4 do
-    for var col := Length(InputFile[0]) downto row + 1 do
-      LfDiagLines[row] := LfDiagLines[row] + InputFile[row+(Length(InputFile[0])-col)][col];
+  for var row := 0 to Length(InputLines) - 4 do
+    for var col := Length(InputLines[0]) downto row + 1 do
+      LfDiagLines[row] := LfDiagLines[row] + InputLines[row+(Length(InputLines[0])-col)][col];
   // the downward-left diagonal lines to the left of the top-right corner
-  for var col := Length(InputFile[0]) - 1 downto 4 do
-    for var row := 0 to Min(Length(InputFile), col-1) do
-      LfDiagLines[Length(InputFile) - 4 + col - 3] :=
-        LfDiagLines[Length(InputFile) - 4 + col - 3] + InputFile[row][col-row];
+  for var col := Length(InputLines[0]) - 1 downto 4 do
+    for var row := 0 to Min(Length(InputLines), col-1) do
+      LfDiagLines[Length(InputLines) - 4 + col - 3] :=
+        LfDiagLines[Length(InputLines) - 4 + col - 3] + InputLines[row][col-row];
 
   // build vertical lines
-  for var col := 1 to Length(InputFile[0]) do
-    for var row := 0 to Length(InputFile) - 1 do
-      VertLines[row] := VertLines[row] + InputFile[row][col];
+  for var col := 1 to Length(InputLines[0]) do
+    for var row := 0 to Length(InputLines) - 1 do
+      VertLines[row] := VertLines[row] + InputLines[row][col];
 
   // search horizontal lines
-  for var row := 0 to Length(InputFile) - 1 do begin
-    var p := RegEx.Match(InputFile[row]);
+  for var row := 0 to Length(InputLines) - 1 do begin
+    var p := RegEx.Match(InputLines[row]);
     while p.Success do begin
       Inc(HorzXMASCount);
       p := p.NextMatch;
@@ -154,30 +114,21 @@ begin
                  '      %d cases of XMAS in %d right-diagonals,' + sLineBreak +
                  '      %d cases of XMAS in %d left-diagonal lines' + sLineBreak +
                  '  for a total of %d cases of XMAS!',
-                  [HorzXMASCount, Length(InputFile),
+                  [HorzXMASCount, Length(InputLines),
                    VertXMASCount, Length(VertLines),
                    RtDiagXMASCount, Length(RtDiagLines),
                    LfDiagXMASCount, Length(LfDiagLines),
                    HorzXMASCount + VertXMASCount + RtDiagXMASCount + LfDiagXMASCount]));
 end;
 
-procedure MenuAction(const Cmd: Char);
+function ParentPath: string;
 begin
-  case Cmd of
-    '?': ShowAbout;
-    'A': GenerateAnswer;
-    'X': Done := True;
-  end;
+  // executables are created in a .\$(Platform)\$(Config) folder, so look two parents up for files
+  Result := '..' + TPath.DirectorySeparatorChar + '..';
 end;
 
 begin
-  try
-    Done := False;
-    repeat
-      MenuAction(MenuPrompt);
-    until Done;
-  except
-    on E: Exception do
-      Writeln(E.ClassName, ': ', E.Message);
-  end;
+  Writeln('Day 4a of Advent of Code, 2024 (https://adventofcode.com/2024/day/4)');
+  GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
+  Readln;
 end.
