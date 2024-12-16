@@ -34,9 +34,8 @@ end;
 procedure GenerateAnswer(const InputLines: TArray<string>);
 
   function MiddlePage(const PageQueue: TArray<Integer>): Integer;
-  // assumption: all arrays have an odd number of elements
   begin
-    var c := Length(PageQueue) div 2 + 1;
+    var c := Length(PageQueue) div 2;
     Result := PageQueue[c];
   end;
 
@@ -57,8 +56,8 @@ procedure GenerateAnswer(const InputLines: TArray<string>);
                            const FirstPage, SecondPage: Integer): Boolean;
   begin
     Result := False;
-    var HasFirst := 0;
-    var HasSecond := 0;
+    var HasFirst := -1;
+    var HasSecond := -1;
 
     for var p := 0 to Length(PageQ) - 1 do begin
       if PageQ[p] = FirstPage then
@@ -67,7 +66,7 @@ procedure GenerateAnswer(const InputLines: TArray<string>);
         HasSecond := p;
     end;
 
-    if (HasFirst > 0) and (HasSecond > 0) and (HasFirst > HasSecond) then
+    if (HasFirst >= 0) and (HasSecond >= 0) and (HasFirst > HasSecond) then
       Result := True;
   end;
 
@@ -112,6 +111,7 @@ begin
         // if no rules were broken, we found a good printer queue
         if QPassed then begin
           Inc(PrintQueuesReady);
+          Writeln(Format('Good print queue: %s (%d)', [CurrLine, MiddlePage(CurrPageQueue)]));
           MiddleTotal := MiddleTotal + MiddlePage(CurrPageQueue);
         end;
       end;
