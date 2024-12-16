@@ -117,7 +117,6 @@ begin
       end;
     end;
 
-    { 6236 is too high }
     Writeln(Format('There are %d rules and %d print queues ready (out of %d total queues); ' + sLineBreak +
                    'the total of the middle pages is %d.',
                    [PageOrderRules.Count, PrintQueuesReady, TotalPrintQueues, MiddleTotal]));
