@@ -1,0 +1,168 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{ABABE43F-F129-4B73-872A-23541108C54F}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="01-HistorianHysteria\ListDiff.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="01-HistorianHysteria\Similarity.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="02-RedNosedReports\SafeReports.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="02-RedNosedReports\DampenedSafeReports.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="03-MullItOver\UncorruptMul.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="03-MullItOver\FilteredMul.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="04-CeresSearch\XMASCount.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="05-PrintQueue\PrintQueue.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="06-GuardGallivant\GuardGallivant.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="07-BridgeRepair\BridgeRepair.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="08-ResonantCollinearity\ResonantCollinearity.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="09-DiskFragmenter\DiskFragmenter.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="ListDiff">
+        <MSBuild Projects="01-HistorianHysteria\ListDiff.dproj"/>
+    </Target>
+    <Target Name="ListDiff:Clean">
+        <MSBuild Projects="01-HistorianHysteria\ListDiff.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ListDiff:Make">
+        <MSBuild Projects="01-HistorianHysteria\ListDiff.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Similarity">
+        <MSBuild Projects="01-HistorianHysteria\Similarity.dproj"/>
+    </Target>
+    <Target Name="Similarity:Clean">
+        <MSBuild Projects="01-HistorianHysteria\Similarity.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Similarity:Make">
+        <MSBuild Projects="01-HistorianHysteria\Similarity.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SafeReports">
+        <MSBuild Projects="02-RedNosedReports\SafeReports.dproj"/>
+    </Target>
+    <Target Name="SafeReports:Clean">
+        <MSBuild Projects="02-RedNosedReports\SafeReports.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SafeReports:Make">
+        <MSBuild Projects="02-RedNosedReports\SafeReports.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DampenedSafeReports">
+        <MSBuild Projects="02-RedNosedReports\DampenedSafeReports.dproj"/>
+    </Target>
+    <Target Name="DampenedSafeReports:Clean">
+        <MSBuild Projects="02-RedNosedReports\DampenedSafeReports.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DampenedSafeReports:Make">
+        <MSBuild Projects="02-RedNosedReports\DampenedSafeReports.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="UncorruptMul">
+        <MSBuild Projects="03-MullItOver\UncorruptMul.dproj"/>
+    </Target>
+    <Target Name="UncorruptMul:Clean">
+        <MSBuild Projects="03-MullItOver\UncorruptMul.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="UncorruptMul:Make">
+        <MSBuild Projects="03-MullItOver\UncorruptMul.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="FilteredMul">
+        <MSBuild Projects="03-MullItOver\FilteredMul.dproj"/>
+    </Target>
+    <Target Name="FilteredMul:Clean">
+        <MSBuild Projects="03-MullItOver\FilteredMul.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FilteredMul:Make">
+        <MSBuild Projects="03-MullItOver\FilteredMul.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="XMASCount">
+        <MSBuild Projects="04-CeresSearch\XMASCount.dproj"/>
+    </Target>
+    <Target Name="XMASCount:Clean">
+        <MSBuild Projects="04-CeresSearch\XMASCount.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="XMASCount:Make">
+        <MSBuild Projects="04-CeresSearch\XMASCount.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="PrintQueue">
+        <MSBuild Projects="05-PrintQueue\PrintQueue.dproj"/>
+    </Target>
+    <Target Name="PrintQueue:Clean">
+        <MSBuild Projects="05-PrintQueue\PrintQueue.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PrintQueue:Make">
+        <MSBuild Projects="05-PrintQueue\PrintQueue.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="GuardGallivant">
+        <MSBuild Projects="06-GuardGallivant\GuardGallivant.dproj"/>
+    </Target>
+    <Target Name="GuardGallivant:Clean">
+        <MSBuild Projects="06-GuardGallivant\GuardGallivant.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GuardGallivant:Make">
+        <MSBuild Projects="06-GuardGallivant\GuardGallivant.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="BridgeRepair">
+        <MSBuild Projects="07-BridgeRepair\BridgeRepair.dproj"/>
+    </Target>
+    <Target Name="BridgeRepair:Clean">
+        <MSBuild Projects="07-BridgeRepair\BridgeRepair.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BridgeRepair:Make">
+        <MSBuild Projects="07-BridgeRepair\BridgeRepair.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ResonantCollinearity">
+        <MSBuild Projects="08-ResonantCollinearity\ResonantCollinearity.dproj"/>
+    </Target>
+    <Target Name="ResonantCollinearity:Clean">
+        <MSBuild Projects="08-ResonantCollinearity\ResonantCollinearity.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ResonantCollinearity:Make">
+        <MSBuild Projects="08-ResonantCollinearity\ResonantCollinearity.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DiskFragmenter">
+        <MSBuild Projects="09-DiskFragmenter\DiskFragmenter.dproj"/>
+    </Target>
+    <Target Name="DiskFragmenter:Clean">
+        <MSBuild Projects="09-DiskFragmenter\DiskFragmenter.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DiskFragmenter:Make">
+        <MSBuild Projects="09-DiskFragmenter\DiskFragmenter.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="ListDiff;Similarity;SafeReports;DampenedSafeReports;UncorruptMul;FilteredMul;XMASCount;PrintQueue;GuardGallivant;BridgeRepair;ResonantCollinearity;DiskFragmenter"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="ListDiff:Clean;Similarity:Clean;SafeReports:Clean;DampenedSafeReports:Clean;UncorruptMul:Clean;FilteredMul:Clean;XMASCount:Clean;PrintQueue:Clean;GuardGallivant:Clean;BridgeRepair:Clean;ResonantCollinearity:Clean;DiskFragmenter:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="ListDiff:Make;Similarity:Make;SafeReports:Make;DampenedSafeReports:Make;UncorruptMul:Make;FilteredMul:Make;XMASCount:Make;PrintQueue:Make;GuardGallivant:Make;BridgeRepair:Make;ResonantCollinearity:Make;DiskFragmenter:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
