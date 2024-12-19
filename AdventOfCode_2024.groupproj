@@ -39,6 +39,15 @@
         <Projects Include="09-DiskFragmenter\DiskFragmenter.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="10-HikingTrails\TrailHeadScores.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="11-PlutonianPebbles\BlinkingStones.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="12-GardenGroups\FencingPrice.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -155,14 +164,41 @@
     <Target Name="DiskFragmenter:Make">
         <MSBuild Projects="09-DiskFragmenter\DiskFragmenter.dproj" Targets="Make"/>
     </Target>
+    <Target Name="TrailHeadScores">
+        <MSBuild Projects="10-HikingTrails\TrailHeadScores.dproj"/>
+    </Target>
+    <Target Name="TrailHeadScores:Clean">
+        <MSBuild Projects="10-HikingTrails\TrailHeadScores.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TrailHeadScores:Make">
+        <MSBuild Projects="10-HikingTrails\TrailHeadScores.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="BlinkingStones">
+        <MSBuild Projects="11-PlutonianPebbles\BlinkingStones.dproj"/>
+    </Target>
+    <Target Name="BlinkingStones:Clean">
+        <MSBuild Projects="11-PlutonianPebbles\BlinkingStones.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BlinkingStones:Make">
+        <MSBuild Projects="11-PlutonianPebbles\BlinkingStones.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="FencingPrice">
+        <MSBuild Projects="12-GardenGroups\FencingPrice.dproj"/>
+    </Target>
+    <Target Name="FencingPrice:Clean">
+        <MSBuild Projects="12-GardenGroups\FencingPrice.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FencingPrice:Make">
+        <MSBuild Projects="12-GardenGroups\FencingPrice.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="ListDiff;Similarity;SafeReports;DampenedSafeReports;UncorruptMul;FilteredMul;XMASCount;PrintQueue;GuardGallivant;BridgeRepair;ResonantCollinearity;DiskFragmenter"/>
+        <CallTarget Targets="ListDiff;Similarity;SafeReports;DampenedSafeReports;UncorruptMul;FilteredMul;XMASCount;PrintQueue;GuardGallivant;BridgeRepair;ResonantCollinearity;DiskFragmenter;TrailHeadScores;BlinkingStones;FencingPrice"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="ListDiff:Clean;Similarity:Clean;SafeReports:Clean;DampenedSafeReports:Clean;UncorruptMul:Clean;FilteredMul:Clean;XMASCount:Clean;PrintQueue:Clean;GuardGallivant:Clean;BridgeRepair:Clean;ResonantCollinearity:Clean;DiskFragmenter:Clean"/>
+        <CallTarget Targets="ListDiff:Clean;Similarity:Clean;SafeReports:Clean;DampenedSafeReports:Clean;UncorruptMul:Clean;FilteredMul:Clean;XMASCount:Clean;PrintQueue:Clean;GuardGallivant:Clean;BridgeRepair:Clean;ResonantCollinearity:Clean;DiskFragmenter:Clean;TrailHeadScores:Clean;BlinkingStones:Clean;FencingPrice:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="ListDiff:Make;Similarity:Make;SafeReports:Make;DampenedSafeReports:Make;UncorruptMul:Make;FilteredMul:Make;XMASCount:Make;PrintQueue:Make;GuardGallivant:Make;BridgeRepair:Make;ResonantCollinearity:Make;DiskFragmenter:Make"/>
+        <CallTarget Targets="ListDiff:Make;Similarity:Make;SafeReports:Make;DampenedSafeReports:Make;UncorruptMul:Make;FilteredMul:Make;XMASCount:Make;PrintQueue:Make;GuardGallivant:Make;BridgeRepair:Make;ResonantCollinearity:Make;DiskFragmenter:Make;TrailHeadScores:Make;BlinkingStones:Make;FencingPrice:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
