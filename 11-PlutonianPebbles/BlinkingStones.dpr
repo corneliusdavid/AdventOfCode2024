@@ -11,60 +11,48 @@ program BlinkingStones;
 {$R *.res}
 
 uses
-  System.SysUtils, System.Classes, System.IOUtils, System.Math, System.StrUtils;
+  System.SysUtils, System.Classes, System.IOUtils, System.Math, System.StrUtils, System.Threading;
 
 procedure GenerateAnswer(const InputLines: TArray<string>);
+
+  function StoneCount(const Iteration: Integer; const Number: UInt64): UInt64;
+  begin
+    if Iteration = 0 then
+      Result := 1
+    else
+      if Number = 0 then
+        Result := StoneCount(Iteration - 1, 1)
+      else begin
+        var NumLen := Number.ToString.Length;
+        if not Odd(NumLen) then
+          Result := StoneCount(Iteration - 1, StrToUInt64(LeftStr(Number.ToString, NumLen div 2))) +
+                    StoneCount(Iteration - 1, StrToUInt64(RightStr(Number.ToString, NumLen div 2)))
+        else
+          Result := StoneCount(Iteration - 1, Number * 2024);
+      end;
+  end;
+
 const
-  MAX_BLINKS = 25;  // Part 1
-  //MAX_BLINKS = 75; // Part 2
+  //MAX_BLINKS = 25;  // Part 1
+  //MAX_BLINKS = 50;   // just a test
+  MAX_BLINKS = 75; // Part 2
 var
   OrigStones: TStringList;
-  NewStones: TStringList;
+  TotalStoneCount: UInt64;
 begin
+  TotalStoneCount := 0;
   OrigStones := TStringList.Create;
-  NewStones := TStringList.Create;
   try
     OrigStones.CommaText := InputLines[0];
 
-    for var BlinkCount := 1 to MAX_BLINKS do begin
-      NewStones.Clear;
-
-      // use rules to create new list of stones
-      for var i := 0 to OrigStones.Count - 1 do begin
-        // rule 1 - is it zero?
-        if OrigStones[i] = '0' then
-          NewStones.Add('1')
-        else begin
-          // rule 2 - is the length even?
-          var StoneLen := OrigStones[i].Length;
-          if not Odd(StoneLen) then begin
-            NewStones.Add(LeftStr(OrigStones[i], StoneLen div 2));
-            NewStones.Add(RightStr(OrigStones[i], StoneLen div 2));
-          end else begin
-            // rule three - multiply by 2024
-            var StoneVal := StrToInt64(OrigStones[i]) * 2024;
-            NewStones.Add(UIntToStr(StoneVal));
-          end;
-        end;
-      end;
-
-      // now, the new stone list gets moved to the "orig stones" list
-      OrigStones.Clear;
-      for var i := 0 to NewStones.Count - 1 do
-        OrigStones.Add(IntToStr(StrToInt64(NewStones[i])));
-
-      if BlinkCount < 10 then begin
-        // write out what we have so far
-        for var i := 0 to OrigStones.Count - 1 do
-          Write(OrigStones[i], ' ');
-        Writeln;
-      end;
+    for var i := 0 to OrigStones.Count - 1 do begin
+      Writeln('Processing ', OrigStones[i], ' ... ');
+      TotalStoneCount := TotalStoneCount + StoneCount(MAX_BLINKS, StrToUInt64(OrigStones[i]));
     end;
 
     Writeln(Format('After blinking %d times, there are %d stones.',
-                   [MAX_BLINKS, OrigStones.Count]));
+                   [MAX_BLINKS, TotalStoneCount]));
   finally
-    NewStones.Free;
     OrigStones.Free;
   end;
 
