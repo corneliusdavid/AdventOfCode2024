@@ -3,7 +3,7 @@ program ListDiff;
  * in: Delphi 12.2
  * on: December, 2024
  * by: David Cornelius
- * to: Solve Day 1a of Advent of Code, 2024 (https://adventofcode.com/2024/day/1)
+ * to: Solve Day 1 of Advent of Code, 2024 (https://adventofcode.com/2024/day/1)
  *)
 
 {$APPTYPE CONSOLE}
@@ -15,10 +15,11 @@ uses
 
 procedure GenerateAnswer(const InputLines: TArray<string>);
 var
-  LeftLoc, RightLoc, DiffLocs: Integer;
+  LeftLoc, RightLoc, DiffLocs, SimScore: Integer;
   LeftLocs, RightLocs: TList<Integer>;
 begin
   DiffLocs := 0;
+  SimScore := 0;
 
   LeftLocs := TList<Integer>.Create;
   RightLocs := TList<Integer>.Create;
@@ -38,8 +39,17 @@ begin
     LeftLocs.Sort;
     RightLocs.Sort;
     for var i := 0 to LeftLocs.Count - 1 do begin
-      Writeln(Format('%d - %d = %d', [RightLocs.Items[i], LeftLocs.Items[i], Abs(RightLocs.Items[i] - LeftLocs.Items[i])]));
+      // part 1
       DiffLocs := DiffLocs + Abs(RightLocs.Items[i] - LeftLocs.Items[i]);
+
+      // part 2
+      LeftLoc := LeftLocs.Items[i];
+      var SameLocCount := 0;
+      // find same location in right list
+      for var j := 0 to RightLocs.Count - 1 do
+        if RightLocs.Items[j] = LeftLoc then
+          Inc(SameLocCount);
+      Inc(SimScore, LeftLoc * SameLocCount);
     end;
   finally
     LeftLocs.Free;
@@ -47,6 +57,7 @@ begin
   end;
 
   Writeln('Total Difference: ', DiffLocs);
+  Writeln('Similarity Score: ', SimScore);
 end;
 
 function ParentPath: string;
@@ -56,7 +67,9 @@ begin
 end;
 
 begin
-  Writeln('Day 1a of Advent of Code, 2024 (https://adventofcode.com/2024/day/1)');
+  Writeln('Day 1 of Advent of Code, 2024 (https://adventofcode.com/2024/day/1)');
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
+  {$IFDEF DEBUG}
   Readln;
+  {$ENDIF}
 end.
