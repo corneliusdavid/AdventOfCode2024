@@ -11,8 +11,13 @@ program TrailHeadScores;
 {$R *.res}
 
 uses
-  System.SysUtils, System.Classes, System.IOUtils, System.Math, System.StrUtils,
-  System.Generics.Collections;
+  System.SysUtils,
+  System.Classes,
+  System.IOUtils,
+  System.Math,
+  System.StrUtils,
+  System.Generics.Collections,
+  uAoCCommon in '..\uAoCCommon.pas';
 
 type
   CharArray2D = array of array of Char;
@@ -139,8 +144,6 @@ begin
   try
     TrailMap := ConvertToArray2D(InputLines);
     TrailHeads := 0;
-    TrailScore := 0;
-    TrailRating := 0;
     TotalTrailScore := 0;
     TotalRatingScore := 0;
 
@@ -189,7 +192,8 @@ begin
 end;
 
 begin
-  Writeln('Day 10a of Advent of Code, 2024 (https://adventofcode.com/2024/day/10)');
+  AoCHeader('10', 'adventofcode.com/2024/day/10');
+
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
   Readln;
 end.

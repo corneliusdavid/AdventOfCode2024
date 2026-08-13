@@ -11,7 +11,13 @@ program BridgeRepair;
 {$R *.res}
 
 uses
-  System.SysUtils, System.Classes, System.IOUtils, System.Math, System.StrUtils, RegularExpressions;
+  System.SysUtils,
+  System.Classes,
+  System.IOUtils,
+  System.Math,
+  System.StrUtils,
+  RegularExpressions,
+  uAoCCommon in '..\uAoCCommon.pas';
 
 procedure GenerateAnswer(const InputLines: TArray<string>);
 
@@ -95,7 +101,8 @@ begin
 end;
 
 begin
-  Writeln('Day 7a of Advent of Code, 2024 (https://adventofcode.com/2024/day/7)');
+  AoCHeader('7', 'adventofcode.com/2024/day/7');
+
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
   Readln;
 end.

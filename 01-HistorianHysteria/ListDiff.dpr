@@ -11,7 +11,11 @@ program ListDiff;
 {$R *.res}
 
 uses
-  System.SysUtils, System.Classes, System.IOUtils, System.Generics.Collections;
+  System.SysUtils,
+  System.Classes,
+  System.IOUtils,
+  System.Generics.Collections,
+  uAoCCommon in '..\uAoCCommon.pas';
 
 procedure GenerateAnswer(const InputLines: TArray<string>);
 var
@@ -67,7 +71,8 @@ begin
 end;
 
 begin
-  Writeln('Day 1 of Advent of Code, 2024 (https://adventofcode.com/2024/day/1)');
+  AoCHeader('1', 'adventofcode.com/2024/day/1');
+
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
   {$IFDEF DEBUG}
   Readln;

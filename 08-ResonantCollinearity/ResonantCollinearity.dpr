@@ -11,7 +11,12 @@ program ResonantCollinearity;
 {$R *.res}
 
 uses
-  System.SysUtils, System.Classes, System.IOUtils, System.Math, System.StrUtils;
+  System.SysUtils,
+  System.Classes,
+  System.IOUtils,
+  System.Math,
+  System.StrUtils,
+  uAoCCommon in '..\uAoCCommon.pas';
 
 procedure GenerateAnswer(const InputLines: TArray<string>);
 begin
@@ -31,7 +36,8 @@ begin
 end;
 
 begin
-  Writeln('Day 8a of Advent of Code, 2024 (https://adventofcode.com/2024/day/8)');
+  AoCHeader('8', 'adventofcode.com/2024/day/8');
+
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
   Readln;
 end.

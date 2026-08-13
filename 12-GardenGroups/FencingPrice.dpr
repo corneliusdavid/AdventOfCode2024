@@ -11,7 +11,12 @@ program FencingPrice;
 {$R *.res}
 
 uses
-  System.SysUtils, System.Classes, System.IOUtils, System.Math, System.StrUtils;
+  System.SysUtils,
+  System.Classes,
+  System.IOUtils,
+  System.Math,
+  System.StrUtils,
+  uAoCCommon in '..\uAoCCommon.pas';
 
 procedure GenerateAnswer(const InputLines: TArray<string>);
 begin
@@ -28,7 +33,8 @@ begin
 end;
 
 begin
-  Writeln('Day 12a of Advent of Code, 2024 (https://adventofcode.com/2024/day/12)');
+  AoCHeader('12', 'adventofcode.com/2024/day/12');
+
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
   Readln;
 end.

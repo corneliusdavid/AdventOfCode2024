@@ -11,7 +11,13 @@ program BlinkingStones;
 {$R *.res}
 
 uses
-  System.SysUtils, System.Classes, System.IOUtils, System.Math, System.StrUtils, System.Threading;
+  System.SysUtils,
+  System.Classes,
+  System.IOUtils,
+  System.Math,
+  System.StrUtils,
+  System.Threading,
+  uAoCCommon in '..\uAoCCommon.pas';
 
 procedure GenerateAnswer(const InputLines: TArray<string>);
 
@@ -66,7 +72,8 @@ begin
 end;
 
 begin
-  Writeln('Day 11a of Advent of Code, 2024 (https://adventofcode.com/2024/day/11)');
+  AoCHeader('11', 'adventofcode.com/2024/day/11');
+
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
   Readln;
 end.

@@ -12,7 +12,11 @@ program SafeReports;
 {$R *.res}
 
 uses
-  System.SysUtils, System.Classes, System.IOUtils, System.Generics.Collections;
+  System.SysUtils,
+  System.Classes,
+  System.IOUtils,
+  System.Generics.Collections,
+  uAoCCommon in '..\uAoCCommon.pas';
 
 type
   TIntArray = TArray<Integer>;
@@ -104,7 +108,6 @@ var
   SafeReportCount: Integer;
   DampenedSafeCount: Integer;
   ReportNums: TArray<Integer>;
-  RepNum: Integer;
 begin
   SafeReportCount := 0;
   DampenedSafeCount := 0;
@@ -145,7 +148,8 @@ begin
 end;
 
 begin
-  Writeln('Day 2 of Advent of Code, 2024 (https://adventofcode.com/2024/day/2)');
+  AoCHeader('2', 'adventofcode.com/2024/day/2');
+
   {$IFDEF Sample}
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input-sm.txt')));
   {$ELSE}

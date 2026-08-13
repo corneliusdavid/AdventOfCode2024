@@ -11,12 +11,18 @@ program GuardGallivant;
 {$R *.res}
 
 uses
-  System.SysUtils, System.Classes, System.IOUtils, System.Math, System.StrUtils, RegularExpressions;
+  System.SysUtils,
+  System.Classes,
+  System.IOUtils,
+  System.Math,
+  System.StrUtils,
+  RegularExpressions,
+  uAoCCommon in '..\uAoCCommon.pas';
 
 procedure GenerateAnswer(const InputLines: TArray<string>);
 type
   TGuardDirections = (gdUp, gdDown, gdLeft, gdRight);
-  TGuardPosChars = set of Char;
+  TGuardPosChars = set of AnsiChar;
 const
   GuardPosChars: TGuardPosChars = ['^', 'v', '<', '>'];
   ObstacleChar = '#';
@@ -35,7 +41,7 @@ const
       Result := gdDown
     else if GuardPosChar = '<' then
       Result := gdLeft
-    else if GuardPosChar = '>' then
+    else {if GuardPosChar = '>' then}
       Result := gdRight;
   end;
 
@@ -133,7 +139,8 @@ begin
 end;
 
 begin
-  Writeln('Day 6a of Advent of Code, 2024 (https://adventofcode.com/2024/day/6)');
+  AoCHeader('6', 'adventofcode.com/2024/day/6');
+
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
   Readln;
 end.

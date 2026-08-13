@@ -11,7 +11,13 @@ program PrintQueue;
 {$R *.res}
 
 uses
-  System.SysUtils, System.Classes, System.IOUtils, System.Math, System.StrUtils, System.Generics.Collections;
+  System.SysUtils,
+  System.Classes,
+  System.IOUtils,
+  System.Math,
+  System.StrUtils,
+  System.Generics.Collections,
+  uAoCCommon in '..\uAoCCommon.pas';
 
 type
   TPageOrderRule = class
@@ -132,7 +138,8 @@ begin
 end;
 
 begin
-  Writeln('Day 5a of Advent of Code, 2024 (https://adventofcode.com/2024/day/5)');
+  AoCHeader('5', 'adventofcode.com/2024/day/5');
+
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
   Readln;
 end.

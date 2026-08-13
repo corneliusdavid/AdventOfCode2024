@@ -12,7 +12,13 @@ program XMASCount;
 {$R *.res}
 
 uses
-  System.SysUtils, System.Classes, System.IOUtils, System.Math, System.StrUtils, RegularExpressions;
+  System.SysUtils,
+  System.Classes,
+  System.IOUtils,
+  System.Math,
+  System.StrUtils,
+  RegularExpressions,
+  uAoCCommon in '..\uAoCCommon.pas';
 
 type
   CharArray2D = array of array of Char;
@@ -168,7 +174,8 @@ begin
 end;
 
 begin
-  Writeln('Day 4 of Advent of Code, 2024 (https://adventofcode.com/2024/day/4)');
+  AoCHeader('4', 'adventofcode.com/2024/day/4');
+
   {$IFDEF Sample}
   GenerateAnswer(ConvertToArray2D(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input-sm.txt'))));
   {$ELSE}

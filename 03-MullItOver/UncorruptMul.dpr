@@ -12,7 +12,11 @@ program UncorruptMul;
 {$R *.res}
 
 uses
-  System.SysUtils, System.Classes, System.IOUtils, RegularExpressions;
+  System.SysUtils,
+  System.Classes,
+  System.IOUtils,
+  RegularExpressions,
+  uAoCCommon in '..\uAoCCommon.pas';
 
 procedure GenerateAnswer(const InputLines: TArray<string>; const DoPart2: Boolean = False);
 const
@@ -83,7 +87,8 @@ begin
 end;
 
 begin
-  Writeln('Day 3 of Advent of Code, 2024 (https://adventofcode.com/2024/day/3)');
+  AoCHeader('3', 'adventofcode.com/2024/day/3');
+
   {$IFDEF Sample}
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input-sm.txt')), False);
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input-sm.txt')), True);

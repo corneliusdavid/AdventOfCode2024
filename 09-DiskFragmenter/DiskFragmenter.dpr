@@ -11,7 +11,12 @@ program DiskFragmenter;
 {$R *.res}
 
 uses
-  System.SysUtils, System.Classes, System.IOUtils, System.Math, System.StrUtils;
+  System.SysUtils,
+  System.Classes,
+  System.IOUtils,
+  System.Math,
+  System.StrUtils,
+  uAoCCommon in '..\uAoCCommon.pas';
 
 procedure GenerateAnswer(const InputLines: TArray<string>);
 var
@@ -48,6 +53,7 @@ var
   var
     i: Int64;
   begin
+    Result := 0;
     for i := 0 to Length(BlockIDs) do
       if BlockIDs[i] = -1 then begin
         Result := i;
@@ -89,7 +95,6 @@ begin
   AllocateBlockArray(CurrLine);
 
   var FileID := 0;
-  var LineLen := 0;
   var CurrBlkPtr := 0;
 
   // build a map of the disk blocks
@@ -132,7 +137,8 @@ begin
 end;
 
 begin
-  Writeln('Day 9a of Advent of Code, 2024 (https://adventofcode.com/2024/day/9)');
+  AoCHeader('9', 'adventofcode.com/2024/day/9');
+
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
   Readln;
 end.
