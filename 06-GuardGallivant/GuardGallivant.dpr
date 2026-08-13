@@ -129,7 +129,7 @@ begin
   until GuardLeftArea(GuardPosX, GuardPosY);
 
 
-  Writeln(Format('The guard was in %d distinct positions.', [GuardPosCount]));
+  AoCSolution(Format('The guard was in [bold]%d[/] distinct positions.', [GuardPosCount]), EmptyStr);
 end;
 
 function ParentPath: string;

@@ -26,7 +26,7 @@ begin
 
   end;
 
-  Writeln(Format('No answer generated yet--but there are %d lines in the input file', [Length(InputLines)]));
+  AoCSolution(Format('No answer generated yet--but there are %d lines in the input file', [Length(InputLines)]), EmptyStr);
 end;
 
 function ParentPath: string;

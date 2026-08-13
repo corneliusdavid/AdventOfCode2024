@@ -60,8 +60,8 @@ begin
     RightLocs.Free;
   end;
 
-  Writeln('Total Difference: ', DiffLocs);
-  Writeln('Similarity Score: ', SimScore);
+  AoCSolution('Part 1 - Total Difference:', DiffLocs.ToString);
+  AoCSolution('Part 2 - Similarity Score:', SimScore.ToString);
 end;
 
 function ParentPath: string;

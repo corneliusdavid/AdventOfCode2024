@@ -163,8 +163,8 @@ begin
     PeaksForTrailHead.Free;
   end;
 
-  Writeln(Format('The %d trailheads have a total score of: %d and a total rating of %d',
-                 [TrailHeads, TotalTrailScore, TotalRatingScore]));
+  AoCSolution(Format('The %d trailheads have a total score of: ', [TrailHeads]),
+              Format('%d and a total rating of %d', [TotalTrailScore, TotalRatingScore]));
 end;
 
 function ParentPath: string;

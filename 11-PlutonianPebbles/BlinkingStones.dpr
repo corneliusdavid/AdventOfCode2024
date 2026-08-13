@@ -39,9 +39,9 @@ procedure GenerateAnswer(const InputLines: TArray<string>);
   end;
 
 const
-  //MAX_BLINKS = 25;  // Part 1
+  MAX_BLINKS = 25;  // Part 1
   //MAX_BLINKS = 50;   // just a test
-  MAX_BLINKS = 75; // Part 2
+  //MAX_BLINKS = 75; // Part 2
 var
   OrigStones: TStringList;
   TotalStoneCount: UInt64;
@@ -56,13 +56,11 @@ begin
       TotalStoneCount := TotalStoneCount + StoneCount(MAX_BLINKS, StrToUInt64(OrigStones[i]));
     end;
 
-    Writeln(Format('After blinking %d times, there are %d stones.',
-                   [MAX_BLINKS, TotalStoneCount]));
+    AoCSolution(Format('After blinking %d times,', [MAX_BLINKS]),
+                Format('there are %d stones.', [TotalStoneCount]));
   finally
     OrigStones.Free;
   end;
-
-
 end;
 
 function ParentPath: string;

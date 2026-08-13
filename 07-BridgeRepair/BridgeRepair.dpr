@@ -90,8 +90,9 @@ begin
     end;
   end;
 
-  Writeln(Format('There are %d equations in the input file, %d can be true for a sum total of %d.',
-                  [Length(InputLines), EquationsCorrect, TotalEqAnswers]));
+  AoCSolution(Format('There are %d equations in the input file,', [Length(InputLines)]),
+              Format('%d can be true for a sum total of %d.', [EquationsCorrect, TotalEqAnswers]));
+
 end;
 
 function ParentPath: string;

@@ -123,9 +123,9 @@ begin
       end;
     end;
 
-    Writeln(Format('There are %d rules and %d print queues ready (out of %d total queues); ' + sLineBreak +
-                   'the total of the middle pages is %d.',
-                   [PageOrderRules.Count, PrintQueuesReady, TotalPrintQueues, MiddleTotal]));
+    AoCSolution(Format('There are %d rules and %d print queues ready (out of %d total queues);' + sLineBreak,
+                       [PageOrderRules.Count, PrintQueuesReady, TotalPrintQueues]),
+                   'The total of the middle pages is ' + MiddleTotal.ToString);
   finally
     PageOrderRules.Free;
   end;

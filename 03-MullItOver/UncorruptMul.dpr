@@ -75,9 +75,9 @@ begin
   end;
 
   if DoPart2 then
-    Writeln(Format('Part 2: Found Mul Matches: %d for a grand total of %d', [MulCount, MulTotal]))
+    AoCSolution('Part 2 - Found Mul Matches:', Format('%d for a grand total of %d', [MulCount, MulTotal]))
   else
-    Writeln(Format('Part 1: Found Mul Matches: %d for a grand total of %d', [MulCount, MulTotal]));
+    AoCSolution('Part 1 - Found Mul Matches:[', Format('%d for a grand total of %d', [MulCount, MulTotal]));
 end;
 
 function ParentPath: string;

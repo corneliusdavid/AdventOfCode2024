@@ -135,10 +135,10 @@ begin
     end;
   end;
 
-  Writeln(Format('Part 1: Safe Reports: %d out of %d total reports.',
-                 [SafeReportCount, Length(InputLines)]));
-  Writeln(Format('Part 2: Dampened Safe Reports: %d plus original safe = %d total safe reports.',
-                 [DampenedSafeCount, DampenedSafeCount + SafeReportCount]));
+  AoCSolution('Part 1 - Safe Reports:', Format('%d out of %d total reports.',
+                                               [SafeReportCount, Length(InputLines)]));
+  AoCSolution('Part 2 - Dampened Safe Reports:', Format('%d plus original safe = %d total safe reports.',
+                                                        [DampenedSafeCount, DampenedSafeCount + SafeReportCount]));
 end;
 
 function ParentPath: string;

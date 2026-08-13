@@ -125,9 +125,9 @@ begin
   var CheckSum := GetDiskCheckSum;
 
   Writeln;
-  Writeln(Format('There are %d characters in the input file that map out %d blocks ' +
-                 'for a total checksum of %d.',
-                 [Length(InputLines[0]), Length(BlockIDs), CheckSum]));
+  AoCSolution(Format('There are %d characters in the input file that map out %d blocks',
+                     [Length(InputLines[0]), Length(BlockIDs)]),
+              Format('for a total checksum of %d.', [CheckSum]));
 end;
 
 function ParentPath: string;

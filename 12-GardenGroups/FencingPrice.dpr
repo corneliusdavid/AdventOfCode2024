@@ -22,8 +22,7 @@ procedure GenerateAnswer(const InputLines: TArray<string>);
 begin
   var CurrLine := InputLines[0];
 
-  Writeln(Format('No answer yet; there are %d lines in the input file.',
-                 [Length(InputLines)]));
+  AoCSolution(Format('No answer yet; there are %d lines in the input file.', [Length(InputLines)]), EmptyStr);
 end;
 
 function ParentPath: string;

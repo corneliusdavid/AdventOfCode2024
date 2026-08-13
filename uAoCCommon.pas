@@ -9,6 +9,7 @@ unit uAoCCommon;
 interface
 
 procedure AoCHeader(const DayPartStr, DayLink: string);
+procedure AoCSolution(const Preface, Answer: string);
 
 
 implementation
@@ -21,6 +22,13 @@ procedure AoCHeader(const DayPartStr, DayLink: string);
 begin
   AnsiConsole.MarkupLine(Format('[yellow]Day %s of Advent of Code, 2024 ([link=https://%s]%s[/])[/]',
                          [DayPartStr, DayLink, DayLink]));
+end;
+
+procedure AoCSolution(const Preface, Answer: string);
+begin
+  AnsiConsole.Write(Widgets.Panel(Preface + ' [bold]' + Answer + '[/]')
+    .WithHeader('Solution')
+    .WithBorder(TBoxBorderKind.Rounded));
 end;
 
 end.

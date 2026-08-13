@@ -150,15 +150,15 @@ begin
     end;
 
   {$IFDEF DEBUG}
-  Writeln('Part 1: search in all directions from each "X":');
-  Writeln(Format('Found %d cases of XMAS in horizontal lines,' + sLineBreak +
+  AoCSolution('Part 1 - search in all directions from each "X":' + sLineBreak,
+       Format('Found %d cases of XMAS in horizontal lines,' + sLineBreak +
                  '      %d cases of XMAS in vertial lines,' + sLineBreak +
                  '      %d cases of XMAS in right-diagonals,' + sLineBreak +
                  '      %d cases of XMAS in left-diagonal lines' + sLineBreak +
                  '  for a total of %d cases of XMAS!',
                   [HorzXMASCount, VertXMASCount, RtDiagXMASCount, LfDiagXMASCount,
                    HorzXMASCount + VertXMASCount + RtDiagXMASCount + LfDiagXMASCount]));
-  Writeln(Format('Part 2: Found %d cases of crossed "MAS"', [DiagCrossCount]));
+  AoCSolution('Part 2 - ', Format('Found %d cases of crossed "MAS"', [DiagCrossCount]));
   {$ELSE}
   Writeln(Format('Part 1: Found a total of %d cases of XMAS!',
                   [HorzXMASCount + VertXMASCount + RtDiagXMASCount + LfDiagXMASCount]));
