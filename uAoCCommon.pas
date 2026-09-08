@@ -16,19 +16,24 @@ implementation
 
 uses
   SysUtils,
-  VSoft.AnsiConsole;
+  System.Console;
 
 procedure AoCHeader(const DayPartStr, DayLink: string);
 begin
-  AnsiConsole.MarkupLine(Format('[yellow]Day %s of Advent of Code, 2024 ([link=https://%s]%s[/])[/]',
-                         [DayPartStr, DayLink, DayLink]));
+  Console.Clear;
+  Console.SetColors(TConsoleColor.Yellow, TConsoleColor.DarkBlue);
+  Console.WriteLine(Format('Day %s of Advent of Code, 2024 (https://%s)',
+                         [DayPartStr, DayLink]));
+  Console.ResetColor;
 end;
 
 procedure AoCSolution(const Preface, Answer: string);
 begin
-  AnsiConsole.Write(Widgets.Panel(Preface + ' [bold]' + Answer + '[/]')
-    .WithHeader('Solution')
-    .WithBorder(TBoxBorderKind.Rounded));
+  Console.ForegroundColor := TConsoleColor.Yellow;
+  Console.Write(Preface + ' ');
+  Console.BackgroundColor := TConsoleColor.DarkGreen;
+  Console.WriteLine(Answer);
+  Console.ResetColor;
 end;
 
 end.
