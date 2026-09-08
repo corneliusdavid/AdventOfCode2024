@@ -4,20 +4,20 @@
         <MainSource>FencingPrice.dpr</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
-        <ProjectName Condition="'$(ProjectName)'==''">FencingPrice</ProjectName>
         <TargetedPlatforms>3</TargetedPlatforms>
         <AppType>Console</AppType>
         <FrameworkType>None</FrameworkType>
-        <ProjectVersion>20.3</ProjectVersion>
+        <ProjectVersion>20.4</ProjectVersion>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <ProjectName Condition="'$(ProjectName)'==''">FencingPrice</ProjectName>
     </PropertyGroup>
     <PropertyGroup>
-        <DPMCompiler>delphi13.0</DPMCompiler>
+        <DPMCompiler>delphi12.0</DPMCompiler>
         <DPMCache Condition="'$(DPMCache)' == ''">$(APPDATA)\.dpm\package_cache</DPMCache>
         <DPM>$(DPMCache)\$(DPMCompiler)</DPM>
-        <DPMExe>C:\Users\david\AppData\Local\Programs\DPM Package Manager\dpm.exe</DPMExe>
-        <DPMSearch Condition="'$(Platform)'=='Win32'">$(DPM)\VSoft.System.Console\1.2.5\lib\Win32;$(DPM)\VSoft.AnsiConsole\0.2.0\lib\Win32;</DPMSearch>
-        <DPMSearch Condition="'$(Platform)'=='Win64'">$(DPM)\VSoft.System.Console\1.2.5\lib\Win64;$(DPM)\VSoft.AnsiConsole\0.2.0\lib\Win64;</DPMSearch>
+        <DPMExe>C:\Users\dev\AppData\Local\Programs\DPM Package Manager\dpm.exe</DPMExe>
+        <DPMSearch Condition="'$(Platform)'=='Win32'">$(DPM)\VSoft.System.Console\1.3.0\lib\Win32;</DPMSearch>
+        <DPMSearch Condition="'$(Platform)'=='Win64'">$(DPM)\VSoft.System.Console\1.3.0\lib\Win64;</DPMSearch>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
         <Base>true</Base>
@@ -1137,14 +1137,13 @@
                 <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="Win64" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="Win64x" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="WinARM64EC" Name="$(PROJECTNAME)"/>
             </Deployment>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>
         <DPM>
             <Packages>
-                <PackageReference id="VSoft.AnsiConsole" version="0.2.0" manifestHash="sha256:a3ad1e99a630aec08f208d272ff42df74512247c13d88ec04495540aa0aba508">
-                    <PackageReference id="VSoft.System.Console" version="1.2.5" range="[1.2.4,]"/>
-                </PackageReference>
+                <PackageReference id="VSoft.System.Console" version="1.3.0" manifestHash="sha256:d097378871e82de37eca8173df47c704514a892232c714ebe893c0c1f40af0ce"/>
             </Packages>
         </DPM>
     </ProjectExtensions>

@@ -17,6 +17,7 @@ uses
   System.Math,
   System.StrUtils,
   System.Generics.Collections,
+  System.Console,
   uAoCCommon in '..\uAoCCommon.pas';
 
 type
@@ -153,8 +154,10 @@ begin
           Inc(TrailHeads);
           TrailScore := FindPeaks(TrailLoc.Create(c, r), TrailLoc.Create(c, r));
           TrailRating := FindRatings(TrailLoc.Create(c, r), TrailLoc.Create(c, r));
+          {$IFDEF SHOWWORK}
           Writeln(Format('Trailhead at %d,%d can reach %d peaks and has a rating of %d.',
                          [c, r, TrailScore, TrailRating]));
+          {$ENDIF}
           TotalTrailScore := TotalTrailScore + TrailScore;
           TotalRatingScore := TotalRatingScore + TrailRating;
         end;
@@ -195,5 +198,7 @@ begin
   AoCHeader('10', 'adventofcode.com/2024/day/10');
 
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
-  Readln;
+  {$IFDEF DEBUG}
+  Console.ReadLine;
+  {$ENDIF}
 end.

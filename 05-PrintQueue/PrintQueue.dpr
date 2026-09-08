@@ -17,6 +17,7 @@ uses
   System.Math,
   System.StrUtils,
   System.Generics.Collections,
+  System.Console,
   uAoCCommon in '..\uAoCCommon.pas';
 
 type
@@ -117,7 +118,9 @@ begin
         // if no rules were broken, we found a good printer queue
         if QPassed then begin
           Inc(PrintQueuesReady);
+          {$IFDEF SHOWWORK}
           Writeln(Format('Good print queue: %s (%d)', [CurrLine, MiddlePage(CurrPageQueue)]));
+          {$ENDIF}
           MiddleTotal := MiddleTotal + MiddlePage(CurrPageQueue);
         end;
       end;
@@ -141,5 +144,7 @@ begin
   AoCHeader('5', 'adventofcode.com/2024/day/5');
 
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
-  Readln;
+  {$IFDEF DEBUG}
+  Console.ReadLine;
+  {$ENDIF}
 end.

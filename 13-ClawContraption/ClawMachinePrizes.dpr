@@ -11,8 +11,16 @@ program ClawMachinePrizes;
 {$R *.res}
 
 uses
-  System.SysUtils, System.Classes, System.IOUtils, System.Math, System.StrUtils,
-  RegularExpressions;
+  System.SysUtils,
+  System.Classes,
+  System.IOUtils,
+  System.Math,
+  System.StrUtils,
+  System.Console,
+  RegularExpressions,
+  uAoCCommon in '..\uAoCCommon.pas';
+
+{$DEFINE SHOWWORK}
 
 type
   TButtonMove = record
@@ -102,13 +110,16 @@ begin
       Continue;
 
     Inc(WinableMachines);
+    {$IFDEF SHOWWORK}
     Writeln(Format('Machine %d needs %d Button A pushes and %d Button B pushes.',
                    [i+1, Trunc(BtnA), Trunc(BtnB)]));
+    {$ENDIF}
 
     TotalBtnA := TotalBtnA + Trunc(BtnA);
     TotalBtnB := TotalBtnB + Trunc(BtnB);
   end;
 
+  {$IFDEF SHOWWORK}
   if SolutionTwo then
     Writeln(sLineBreak + 'Solution Two: ')
   else
@@ -122,6 +133,7 @@ begin
                   TotalBtnA, TotalBtnB,
                   TotalBtnA, BtnA_Cost, TotalBtnB, BtnB_Cost,
                   TotalBtnA * BtnA_Cost + TotalBtnB * BtnB_Cost]));
+  {$ENDIF}
 end;
 
 function ParentPath: string;
@@ -153,8 +165,11 @@ begin
 end;
 
 begin
-  Writeln('Day 13 of Advent of Code, 2024 (https://adventofcode.com/2024/day/13');
+  AoCHeader('13', 'adventofcode.com/2024/day/13');
+
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')), True);
-  Readln;
+  {$IFDEF DEBUG}
+  Console.ReadLine;
+  {$ENDIF}
 end.

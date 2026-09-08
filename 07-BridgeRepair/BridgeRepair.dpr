@@ -16,6 +16,7 @@ uses
   System.IOUtils,
   System.Math,
   System.StrUtils,
+  System.Console,
   RegularExpressions,
   uAoCCommon in '..\uAoCCommon.pas';
 
@@ -82,7 +83,9 @@ begin
           if CheckAnswer = EqAns then begin
             Inc(EquationsCorrect);
             TotalEqAnswers := TotalEqAnswers + EqAns;
+            {$IFDEF SHOWWORK}
             Writeln('Good equation: ' + GoodEq);
+            {$ENDIF}
             Break;
           end;
         end;
@@ -105,5 +108,7 @@ begin
   AoCHeader('7', 'adventofcode.com/2024/day/7');
 
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
-  Readln;
+  {$IFDEF DEBUG}
+  Console.ReadLine;
+  {$ENDIF}
 end.
