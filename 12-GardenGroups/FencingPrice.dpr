@@ -16,6 +16,7 @@ uses
   System.IOUtils,
   System.Math,
   System.StrUtils,
+  System.Console,
   uAoCCommon in '..\uAoCCommon.pas';
 
 procedure GenerateAnswer(const InputLines: TArray<string>);
@@ -35,5 +36,7 @@ begin
   AoCHeader('12', 'adventofcode.com/2024/day/12');
 
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
-  Readln;
+  {$IFDEF DEBUG}
+  Console.ReadLine;
+  {$ENDIF}
 end.

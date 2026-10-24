@@ -16,6 +16,7 @@ uses
   System.IOUtils,
   System.Math,
   System.StrUtils,
+  System.Console,
   RegularExpressions,
   uAoCCommon in '..\uAoCCommon.pas';
 
@@ -129,7 +130,7 @@ begin
   until GuardLeftArea(GuardPosX, GuardPosY);
 
 
-  AoCSolution(Format('The guard was in [bold]%d[/] distinct positions.', [GuardPosCount]), EmptyStr);
+  AoCSolution('The guard was in ', Format('%d distinct positions.', [GuardPosCount]));
 end;
 
 function ParentPath: string;
@@ -142,5 +143,7 @@ begin
   AoCHeader('6', 'adventofcode.com/2024/day/6');
 
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
-  Readln;
+  {$IFDEF DEBUG}
+  Console.ReadLine;
+  {$ENDIF}
 end.

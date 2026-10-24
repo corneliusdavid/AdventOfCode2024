@@ -16,6 +16,7 @@ uses
   System.Classes,
   System.IOUtils,
   System.Generics.Collections,
+  System.Console,
   uAoCCommon in '..\uAoCCommon.pas';
 
 type
@@ -116,7 +117,7 @@ begin
     ReportNums := StrListToNumArray(InputLines[i]);
 
     if CheckReportLine(ReportNums) then begin
-      {$IFDEF DEBUG}
+      {$IFDEF SHOWWORK}
       Writeln(i, '. Good Report: ', InputLines[i]);
       {$ENDIF}
       Inc(SafeReportCount);
@@ -125,7 +126,7 @@ begin
         var DampenedReportNums: TIntArray;
         DampenedReportNums := RemoveOneElement(ReportNums, j);
         if CheckReportLine(DampenedReportNums) then begin
-          {$IFDEF DEBUG}
+          {$IFDEF SHOWWORK}
           Writeln(i, '. Dampened Report: ', ArrayNumToStr(DampenedReportNums));
           {$ENDIF}
           Inc(DampenedSafeCount);
@@ -156,6 +157,6 @@ begin
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
   {$ENDIF}
   {$IFDEF DEBUG}
-  Readln;
+  Console.Readline;
   {$ENDIF}
 end.

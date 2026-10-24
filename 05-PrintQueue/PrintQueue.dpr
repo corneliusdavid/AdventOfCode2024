@@ -18,6 +18,7 @@ uses
   System.Math,
   System.StrUtils,
   System.Generics.Collections,
+  System.Console,
   uAoCCommon in '..\uAoCCommon.pas';
 
 type
@@ -171,7 +172,7 @@ begin
         // if no rules were broken, we found a good printer queue
         if QPassed then begin
           Inc(PrintQueuesReady);
-          {$IFDEF DEBUG}
+          {$IFDEF SHOWWORK}
           Writeln(Format('Good print queue: %s (%d)', [CurrLine, MiddlePage(CurrPageQueue)]));
           {$ENDIF}
           CorrectMiddleTotal := CorrectMiddleTotal + MiddlePage(CurrPageQueue);

@@ -15,6 +15,7 @@ uses
   System.SysUtils,
   System.Classes,
   System.IOUtils,
+  System.Console,
   RegularExpressions,
   uAoCCommon in '..\uAoCCommon.pas';
 
@@ -62,7 +63,7 @@ begin
              TryStrToInt(p2, Num2) then begin
             Inc(MulCount);
             var TempTotal := Num1 * Num2;
-            {$IFDEF DEBUG}
+            {$IFDEF SHOWWORK}
             Writeln(Format('found: %s: %d * %d = %d', [p.Value, Num1, Num2, TempTotal]));
             {$ENDIF}
             Inc(MulTotal, TempTotal);
@@ -97,6 +98,6 @@ begin
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')), True);
   {$ENDIF}
   {$IFDEF DEBUG}
-  Readln;
+  Console.ReadLine;
   {$ENDIF}
 end.

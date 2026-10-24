@@ -17,6 +17,7 @@ uses
   System.Math,
   System.StrUtils,
   System.Threading,
+  System.Console,
   uAoCCommon in '..\uAoCCommon.pas';
 
 procedure GenerateAnswer(const InputLines: TArray<string>);
@@ -52,7 +53,9 @@ begin
     OrigStones.CommaText := InputLines[0];
 
     for var i := 0 to OrigStones.Count - 1 do begin
+      {$IFDEF SHOWWORK}
       Writeln('Processing ', OrigStones[i], ' ... ');
+      {$ENDIF}
       TotalStoneCount := TotalStoneCount + StoneCount(MAX_BLINKS, StrToUInt64(OrigStones[i]));
     end;
 
@@ -73,5 +76,7 @@ begin
   AoCHeader('11', 'adventofcode.com/2024/day/11');
 
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
-  Readln;
+  {$IFDEF DEBUG}
+  Console.ReadLine;
+  {$ENDIF}
 end.

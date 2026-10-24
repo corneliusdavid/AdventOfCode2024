@@ -15,6 +15,7 @@ uses
   System.Classes,
   System.IOUtils,
   System.Generics.Collections,
+  System.Console,
   uAoCCommon in '..\uAoCCommon.pas';
 
 procedure GenerateAnswer(const InputLines: TArray<string>);
@@ -75,6 +76,6 @@ begin
 
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
   {$IFDEF DEBUG}
-  Readln;
+  Console.ReadLine;
   {$ENDIF}
 end.

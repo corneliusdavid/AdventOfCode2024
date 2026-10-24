@@ -17,6 +17,7 @@ uses
   System.IOUtils,
   System.Math,
   System.StrUtils,
+  System.Console,
   RegularExpressions,
   uAoCCommon in '..\uAoCCommon.pas';
 
@@ -110,7 +111,7 @@ begin
   maxY := Length(XMASGrid);
   maxX := Length(XMASGrid[0]);
 
-  {$IFDEF DEBUG}
+  {$IFDEF SHOWWORK}
   Writeln(Format('The Input file has %d rows and %d columns.', [Length(XMASGrid), Length(XMASGrid[0])]));
   {$ENDIF}
 
@@ -181,5 +182,7 @@ begin
   {$ELSE}
   GenerateAnswer(ConvertToArray2D(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt'))));
   {$ENDIF}
-  Readln;
+  {$IFDEF DEBUG}
+  Console.ReadLine;
+  {$ENDIF}
 end.
