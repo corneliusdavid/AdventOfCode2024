@@ -182,7 +182,7 @@ begin
         else begin
           Inc(PrintQueuesFixed);
           FixCurrPageQueue(CurrPageQueue, PageOrderRules);
-          {$IFDEF DEBUG}
+          {$IFDEF SHOWWORK}
           Writeln(Format('Fixed print queue: %s (%d)', [PageQToStr(CurrPageQueue), MiddlePage(CurrPageQueue)]));
           {$ENDIF}
           FixedMiddleTotal := FixedMiddleTotal + MiddlePage(CurrPageQueue);
@@ -190,10 +190,10 @@ begin
       end;
     end;
 
-    AoCSolution(Format('There are %d rules and %d print queues ready (out of %d total queues);' + sLineBreak,
-                       [PageOrderRules.Count, PrintQueuesReady, TotalPrintQueues]),
-          'Part 1 - The total of the correct middle pages is ' + CorrectMiddleTotal.ToString + sLineBreak + ' ' +
-          'Part 2 - The total of the fixed middle pages is ' + FixedMiddleTotal.ToString);
+    Console.WriteLine(Format('There are %d rules and %d print queues ready (out of %d total queues);',
+                             [PageOrderRules.Count, PrintQueuesReady, TotalPrintQueues]));
+    AoCSolution('Part 1 - The total of the correct middle pages is ', CorrectMiddleTotal.ToString);
+    AoCSolution('Part 2 - The total of the fixed middle pages is ', FixedMiddleTotal.ToString);
   finally
     PageOrderRules.Free;
   end;
@@ -214,5 +214,7 @@ begin
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
   {$ENDIF}
 
-  Readln;
+  {$IFDEF DEBUG}
+  Console.ReadLine;
+  {$ENDIF}
 end.
