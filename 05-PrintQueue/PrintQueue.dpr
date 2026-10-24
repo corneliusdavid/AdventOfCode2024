@@ -7,6 +7,7 @@ program PrintQueue;
  *)
 
 {$APPTYPE CONSOLE}
+{.$DEFINE Sample}
 
 {$R *.res}
 
@@ -76,18 +77,71 @@ procedure GenerateAnswer(const InputLines: TArray<string>);
       Result := True;
   end;
 
+  procedure FixCurrPageQueue(var PageQ: TArray<Integer>; const PageOrderRules: TList<TPageOrderRule>);
+  var
+    PassedAllRules: Boolean;
+  begin
+    PassedAllRules := False;
+    while not PassedAllRules do begin
+      var Swapped := False;
+
+      for var r := 0 to PageOrderRules.Count - 1 do begin
+        var RuleBefore := PageOrderRules[r].BeforePage;
+        var RuleAfter := PageOrderRules[r].AfterPage;
+
+        var RuleBeforePos := -1;
+        var RuleAfterPos := -1;
+        for var p := 0 to Length(PageQ) - 1 do begin
+          if PageQ[p] = RuleBefore then
+            RuleBeforePos := p;
+          if PageQ[p] = RuleAfter then
+            RuleAfterPos := p;
+        end;
+
+        // if both numbers are in the rule but in the wrong order, swap them
+        if (RuleBeforePos > -1) and (RuleAfterPos > -1) and
+           (RuleBeforePos > RuleAfterPos) then begin
+          var tmp := PageQ[RuleBeforePos];
+          PageQ[RuleBeforePos] := PageQ[RuleAfterPos];
+          PageQ[RuleAfterPos] := tmp;
+
+          // now that we've swapped, we have to check everything again
+          Swapped := True;
+          Break;
+        end;
+      end;
+
+      // if we made it through all the rules without swapping anything, we're good!
+      if not Swapped then
+        PassedAllRules := True;
+    end;
+  end;
+
+  function PageQToStr(const PageQ: TArray<Integer>): string;
+  begin
+    Result := EmptyStr;
+    for var i := 0 to Length(PageQ) - 1 do
+      Result := Result + PageQ[i].ToString + ', ';
+
+    Result := LeftStr(Result, Length(Result) - 2);
+  end;
+
 var
   PageOrderRules: TList<TPageOrderRule>;
   TotalPrintQueues: Integer;
   PrintQueuesReady: Integer;
+  PrintQueuesFixed: Integer;
   CurrPageQueue: TArray<Integer>;
-  MiddleTotal: Integer;
+  CorrectMiddleTotal: Integer;
+  FixedMiddleTotal: Integer;
   QPassed: Boolean;
 begin
   PageOrderRules := TList<TPageOrderRule>.Create;
   TotalPrintQueues := 0;
   PrintQueuesReady := 0;
-  MiddleTotal := 0;
+  PrintQueuesFixed := 0;
+  CorrectMiddleTotal := 0;
+  FixedMiddleTotal := 0;
 
   try
     // process each line in the input
@@ -117,15 +171,28 @@ begin
         // if no rules were broken, we found a good printer queue
         if QPassed then begin
           Inc(PrintQueuesReady);
+          {$IFDEF DEBUG}
           Writeln(Format('Good print queue: %s (%d)', [CurrLine, MiddlePage(CurrPageQueue)]));
-          MiddleTotal := MiddleTotal + MiddlePage(CurrPageQueue);
+          {$ENDIF}
+          CorrectMiddleTotal := CorrectMiddleTotal + MiddlePage(CurrPageQueue);
+        end
+
+        // if this row's updates are NOT in the right order, fix it
+        else begin
+          Inc(PrintQueuesFixed);
+          FixCurrPageQueue(CurrPageQueue, PageOrderRules);
+          {$IFDEF DEBUG}
+          Writeln(Format('Fixed print queue: %s (%d)', [PageQToStr(CurrPageQueue), MiddlePage(CurrPageQueue)]));
+          {$ENDIF}
+          FixedMiddleTotal := FixedMiddleTotal + MiddlePage(CurrPageQueue);
         end;
       end;
     end;
 
     AoCSolution(Format('There are %d rules and %d print queues ready (out of %d total queues);' + sLineBreak,
                        [PageOrderRules.Count, PrintQueuesReady, TotalPrintQueues]),
-                   'The total of the middle pages is ' + MiddleTotal.ToString);
+          'Part 1 - The total of the correct middle pages is ' + CorrectMiddleTotal.ToString + sLineBreak + ' ' +
+          'Part 2 - The total of the fixed middle pages is ' + FixedMiddleTotal.ToString);
   finally
     PageOrderRules.Free;
   end;
@@ -140,6 +207,11 @@ end;
 begin
   AoCHeader('5', 'adventofcode.com/2024/day/5');
 
+  {$IFDEF SAMPLE}
+  GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input-sm.txt')));
+  {$ELSE}
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
+  {$ENDIF}
+
   Readln;
 end.
