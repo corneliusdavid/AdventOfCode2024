@@ -7,6 +7,8 @@ program BridgeRepair;
  *)
 
 {$APPTYPE CONSOLE}
+{$DEFINE Sample}
+{$DEFINE SHOWWORK}
 
 {$R *.res}
 
@@ -37,15 +39,52 @@ procedure GenerateAnswer(const InputLines: TArray<string>);
     end;
   end;
 
+  function CheckForGoodEq(const NumList: TArray<Int64>; const CheckAnswer: Int64): string;
+  var
+    TestAnswer: Int64;
+  begin
+    Result := EmptyStr;
+
+    // number of permutations rises exponentially based on how many numbers we have
+    var TotalPerms := Round(IntPower(2, Length(NumList)-1));
+
+    for var perm := 0 to TotalPerms-1 do begin
+      // initialize check answer for this permutation of operators
+      TestAnswer := NumList[0];
+      var GoodEq := CheckAnswer.ToString + ' = ' + TestAnswer.ToString;
+
+      // the binary bits of the current permutation (perm) will determine what operators are used
+      var bitperm := perm;
+      for var bit := 1 to Length(NumList) - 1 do begin
+        if Odd(bitperm) then begin
+          TestAnswer := TestAnswer * NumList[bit];
+          GoodEq := GoodEq + ' * ' + NumList[bit].ToString;
+        end else begin
+          TestAnswer := TEstAnswer + NumList[bit];
+          GoodEq := GoodEq + ' + ' + NumList[bit].ToString;
+        end;
+        bitperm := bitperm shr 1;
+      end;
+
+      if TestAnswer = CheckAnswer then begin
+        Result := GoodEq;
+        Break;
+      end;
+    end;
+  end;
+
 var
   EqAns: Int64;
-  CheckAnswer: Int64;
   Numbers: TArray<Int64>;
   EquationsCorrect: Integer;
+  AllEquationsCorrect: Integer;
   TotalEqAnswers: Int64;
+  TotalAllEqAnswers: Int64;
 begin
   EquationsCorrect := 0;
+  AllEquationsCorrect := 0;
   TotalEqAnswers := 0;
+  TotalAllEqAnswers := 0;
 
   // process each line
   for var row := 0 to Length(InputLines) - 1 do begin
@@ -59,43 +98,28 @@ begin
         // parse the rest of the line into a number array
         Numbers := StrsToNums(CurrLine);
 
-        // number of permutations rises exponentially based on how many numbers we have
-        var TotalPerms := Round(IntPower(2, Length(Numbers)-1));
-
-        for var perm := 0 to TotalPerms-1 do begin
-          // initialize check answer for this permutation of operators
-          CheckAnswer := Numbers[0];
-          var GoodEq := EqAns.ToString + ' = ' + CheckAnswer.ToString;
-
-          // the binary bits of the current permutation (perm) will determine what operators are used
-          var bitperm := perm;
-          for var bit := 1 to Length(Numbers) - 1 do begin
-            if Odd(bitperm) then begin
-              CheckAnswer := CheckAnswer * Numbers[bit];
-              GoodEq := GoodEq + ' * ' + Numbers[bit].ToString;
-            end else begin
-              CheckAnswer := CheckAnswer + Numbers[bit];
-              GoodEq := GoodEq + ' + ' + Numbers[bit].ToString;
-            end;
-            bitperm := bitperm shr 1;
-          end;
-
-          if CheckAnswer = EqAns then begin
-            Inc(EquationsCorrect);
-            TotalEqAnswers := TotalEqAnswers + EqAns;
-            {$IFDEF SHOWWORK}
-            Writeln('Good equation: ' + GoodEq);
-            {$ENDIF}
-            Break;
-          end;
+        var GoodEq := CheckForGoodEq(Numbers, EqAns);
+        if GoodEq.IsEmpty then begin
+          // try various permutatsions of concatenation
+          {$IFDEF SHOWWORK}
+          Writeln('it wasn''t a good equation--try combining digits');
+          {$ENDIF}
+        end else begin
+          Inc(EquationsCorrect);
+          TotalEqAnswers := TotalEqAnswers + EqAns;
+          {$IFDEF SHOWWORK}
+          Writeln('Good equation: ' + GoodEq);
+          {$ENDIF}
         end;
       end;
     end;
   end;
 
-  AoCSolution(Format('There are %d equations in the input file,', [Length(InputLines)]),
-              Format('%d can be true for a sum total of %d.', [EquationsCorrect, TotalEqAnswers]));
-
+  Console.WriteLine(Format('There are %d equations in the input file,', [Length(InputLines)]));
+  AoCSolution('Part 1 - using only + and *,', Format('%d can be true for a sum total of %d.',
+               [EquationsCorrect, TotalEqAnswers]));
+  AoCSolution('Part 2 - using + and * and ||,', Format('%d can be true for a sum total of %d.',
+               [AllEquationsCorrect, TotalAllEqAnswers]));
 end;
 
 function ParentPath: string;
@@ -107,7 +131,12 @@ end;
 begin
   AoCHeader('7', 'adventofcode.com/2024/day/7');
 
+  {$IFDEF Sample}
+  GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input-sm.txt')));
+  {$ELSE}
   GenerateAnswer(TFile.ReadAllLines(TPath.Combine(ParentPath, 'input.txt')));
+  {$ENDIF}
+
   {$IFDEF DEBUG}
   Console.ReadLine;
   {$ENDIF}
