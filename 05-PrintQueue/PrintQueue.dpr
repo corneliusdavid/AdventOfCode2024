@@ -8,6 +8,7 @@ program PrintQueue;
 
 {$APPTYPE CONSOLE}
 {.$DEFINE Sample}
+{.$DEFINE ShowWork}
 
 {$R *.res}
 
