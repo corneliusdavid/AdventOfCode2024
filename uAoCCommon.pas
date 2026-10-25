@@ -32,8 +32,9 @@ begin
   Console.ForegroundColor := TConsoleColor.Yellow;
   Console.Write(Preface + ' ');
   Console.BackgroundColor := TConsoleColor.DarkGreen;
-  Console.WriteLine(Answer);
+  Console.Write(Answer);
   Console.ResetColor;
+  Console.WriteLine;
 end;
 
 end.
